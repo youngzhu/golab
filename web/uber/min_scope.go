@@ -14,7 +14,7 @@ func badScope() error {
 
 func goodScope() error {
 	// err 只作用在 if 范围内
-	if err := ioutil.WriteFile("", []byte("bad"), 0644); err != nil {
+	if err := ioutil.WriteFile("", []byte(`Good`), 0644); err != nil {
 		return err
 	}
 	return nil
