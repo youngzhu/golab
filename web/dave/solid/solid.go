@@ -1,5 +1,7 @@
 package solid
 
+// https://learnku.com/go/wikis/38440
+
 // SOLID
 // Single Responsibility Principle: 单一职责原则
 // A class should have one, and only one, reason to change. -- Robert C Martin
