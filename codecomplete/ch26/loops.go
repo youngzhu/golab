@@ -10,6 +10,7 @@ func Switched(n int) int {
 
 	sumType := SumTypeEven
 	for i := 0; i < n; i++ {
+		// 这个判断条件在循环中不会改变
 		if sumType == SumTypeEven {
 			if i%2 == 0 {
 				sum += i
