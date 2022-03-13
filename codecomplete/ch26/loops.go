@@ -76,3 +76,27 @@ func WithSentinel(items []int, target int) bool {
 	}
 	return i < n-2
 }
+
+func BusiestOutside(table [][]int) (sum int) {
+	rowCount, columnCount := len(table), len(table[0])
+
+	for column := 0; column < columnCount; column++ {
+		for row := 0; row < rowCount; row++ {
+			sum += table[row][column]
+		}
+	}
+
+	return
+}
+
+func BusiestInside(table [][]int) (sum int) {
+	rowCount, columnCount := len(table), len(table[0])
+
+	for row := 0; row < rowCount; row++ {
+		for column := 0; column < columnCount; column++ {
+			sum += table[row][column]
+		}
+	}
+
+	return
+}

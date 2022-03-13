@@ -24,11 +24,20 @@ func BenchmarkUnswitched(b *testing.B) {
 	}
 }
 
-var int100 []int
+var (
+	int100 []int
+	table  [][]int
+)
 
 func initTestData() {
 	for i := 0; i < 100; i++ {
 		int100 = append(int100, i*i)
+	}
+
+	rows, columns := 5, 100
+	table = make([][]int, rows)
+	for i := range table {
+		table[i] = make([]int, columns)
 	}
 }
 
@@ -53,5 +62,29 @@ func BenchmarkWithSentinel(b *testing.B) {
 	}
 	for i := 0; i < b.N; i++ {
 		WithSentinel(int100, i)
+	}
+}
+
+func BenchmarkBusiestOutside(b *testing.B) {
+	b.ReportAllocs()
+	if table == nil {
+		b.StopTimer()
+		initTestData()
+		b.StartTimer()
+	}
+	for i := 0; i < b.N; i++ {
+		BusiestOutside(table)
+	}
+}
+
+func BenchmarkBusiestInside(b *testing.B) {
+	b.ReportAllocs()
+	if table == nil {
+		b.StopTimer()
+		initTestData()
+		b.StartTimer()
+	}
+	for i := 0; i < b.N; i++ {
+		BusiestInside(table)
 	}
 }
