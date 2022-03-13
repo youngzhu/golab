@@ -88,3 +88,21 @@ func BenchmarkBusiestInside(b *testing.B) {
 		BusiestInside(table)
 	}
 }
+
+func BenchmarkCalCommission(b *testing.B) {
+	b.ReportAllocs()
+	b.ResetTimer()
+
+	for i := 0; i < b.N; i++ {
+		CalCommission(20)
+	}
+}
+
+func BenchmarkCalCommissionTuned(b *testing.B) {
+	b.ReportAllocs()
+	b.ResetTimer()
+
+	for i := 0; i < b.N; i++ {
+		CalCommissionTuned(20)
+	}
+}

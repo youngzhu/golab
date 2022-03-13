@@ -100,3 +100,38 @@ func BusiestInside(table [][]int) (sum int) {
 
 	return
 }
+
+// CalCommission 计算佣金
+// 直观。但是循环中使用了不必要的乘法
+func CalCommission(saleCount int) (commission []float64) {
+	commission = make([]float64, saleCount)
+
+	revenue := 10000.00
+	baseCommission := 3000.0
+	discount := 0.85
+
+	for i := 0; i < saleCount; i++ {
+		count := float64(i + 1)
+		commission[i] = count * revenue * baseCommission * discount
+	}
+
+	return
+}
+
+func CalCommissionTuned(saleCount int) (commission []float64) {
+	commission = make([]float64, saleCount)
+	
+	revenue := 10000.00
+	baseCommission := 3000.0
+	discount := 0.85
+
+	incrementalCommission := revenue * baseCommission * discount
+	cumulativeCommission := incrementalCommission
+
+	for i := 0; i < saleCount; i++ {
+		commission[i] = cumulativeCommission
+		cumulativeCommission += incrementalCommission
+	}
+
+	return
+}
