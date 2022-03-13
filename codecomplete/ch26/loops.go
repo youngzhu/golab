@@ -46,3 +46,33 @@ func Unswitched(n int) int {
 
 	return sum
 }
+
+// 哨兵
+
+func NoSentinel(items []int, target int) bool {
+	n := len(items)
+	found := false
+	i := 0
+	for !found && i < n {
+		if items[i] == target {
+			found = true
+		} else {
+			i++
+		}
+	}
+	return found
+}
+
+func WithSentinel(items []int, target int) bool {
+	n := len(items)
+	last := items[n-1]
+	if last == target {
+		return true
+	}
+	items[n-1] = target // 哨兵，省去边界值的判断
+	i := 0
+	for items[i] != target {
+		i++
+	}
+	return i < n-2
+}
