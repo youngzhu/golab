@@ -1,6 +1,7 @@
 package ch26
 
 import (
+	"math/rand"
 	"testing"
 )
 
@@ -104,5 +105,63 @@ func BenchmarkCalCommissionTuned(b *testing.B) {
 
 	for i := 0; i < b.N; i++ {
 		CalCommissionTuned(20)
+	}
+}
+
+func BenchmarkHypotenuse_rand(b *testing.B) {
+	b.ReportAllocs()
+	b.ResetTimer()
+
+	for i := 0; i < b.N; i++ {
+		Hypotenuse(rand.NormFloat64(), rand.NormFloat64())
+	}
+}
+
+func BenchmarkHypotenuseWithCache_rand(b *testing.B) {
+	b.ReportAllocs()
+	b.ResetTimer()
+
+	for i := 0; i < b.N; i++ {
+		HypotenuseWithCache(rand.NormFloat64(), rand.NormFloat64())
+	}
+}
+
+func BenchmarkHypotenuse_same(b *testing.B) {
+	b.ReportAllocs()
+	b.ResetTimer()
+
+	for i := 0; i < b.N; i++ {
+		Hypotenuse(3.0, 4.0)
+	}
+}
+
+func BenchmarkHypotenuseWithCache_same(b *testing.B) {
+	b.ReportAllocs()
+	b.ResetTimer()
+
+	for i := 0; i < b.N; i++ {
+		HypotenuseWithCache(3.0, 4.0)
+	}
+}
+
+var sides = [][]float64{{3, 0, 4.0}, {8.0, 6.0}}
+
+func BenchmarkHypotenuse_nocache(b *testing.B) {
+	b.ReportAllocs()
+	b.ResetTimer()
+
+	for i := 0; i < b.N; i++ {
+		side := sides[i%2]
+		Hypotenuse(side[0], side[1])
+	}
+}
+
+func BenchmarkHypotenuseWithCache_nocache(b *testing.B) {
+	b.ReportAllocs()
+	b.ResetTimer()
+
+	for i := 0; i < b.N; i++ {
+		side := sides[i%2]
+		HypotenuseWithCache(side[0], side[1])
 	}
 }
