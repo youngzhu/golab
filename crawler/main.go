@@ -11,4 +11,8 @@ func main() {
 
 	fmt.Printf("=== Serial ===\n")
 	worker.Serial("https://golang.org/", fetcher, make(map[string]bool))
+
+	fmt.Printf("=== Concurrent Mutex ===\n")
+	worker.ConcurrentMutex("https://golang.org/", fetcher, worker.NewFetchState())
+
 }
