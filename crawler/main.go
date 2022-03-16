@@ -15,4 +15,7 @@ func main() {
 	fmt.Printf("=== Concurrent Mutex ===\n")
 	worker.ConcurrentMutex("https://golang.org/", fetcher, worker.NewFetchState())
 
+	fmt.Printf("=== Concurrent Channel ===\n")
+	worker.ConcurrentChannel("https://golang.org/", fetcher)
+
 }
