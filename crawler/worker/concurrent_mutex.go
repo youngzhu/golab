@@ -36,12 +36,12 @@ func ConcurrentMutex(url string, fetcher fetch.Fetcher, f *fetchState) {
 	}
 	var done sync.WaitGroup
 	for _, u := range urls {
-		done.Add(1)
+		done.Add(1) //+1
 		go func(uu string) {
-			defer done.Done()
+			defer done.Done() //-1
 			ConcurrentMutex(uu, fetcher, f)
 		}(u)
 	}
-	done.Wait()
+	done.Wait() //所有都完成
 	return
 }
