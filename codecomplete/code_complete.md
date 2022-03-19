@@ -69,8 +69,8 @@ Steve McConnell
 ### Ch28 对软件构建进行管理
 - Suggestions 建议
 - Guidelines 指南
-- Rules
-- Standards
+- ~~Rules~~
+- ~~Standards~~
 
 ### Ch29 集成
 - 没有冒烟测试的每日构建木得灵魂
