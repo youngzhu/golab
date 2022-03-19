@@ -67,7 +67,14 @@ Steve McConnell
 ## 第 Ⅵ 部分 系统级考量
 ### Ch27 程序规模对构建的影响
 ### Ch28 对软件构建进行管理
+- Suggestions 建议
+- Guidelines 指南
+- Rules
+- Standards
+
 ### Ch29 集成
+- 没有冒烟测试的每日构建木得灵魂
+
 ### Ch30 编程工具
 
 ## 第 Ⅶ 部分 软件匠艺
