@@ -9,5 +9,6 @@ func double(s []int) {
 func main() {
 	a := []int{1, 2, 3}
 	double(a)
-	fmt.Println(a)
+	fmt.Println(a) // [1 2 3]
+
 }
