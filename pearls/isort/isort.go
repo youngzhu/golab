@@ -2,7 +2,6 @@ package isort
 
 import (
 	"github.com/youngzhu/golab/pearls/irand"
-	"math/rand"
 )
 
 const n1k = 1000
@@ -22,9 +21,7 @@ func Get1kSorted() (s []int) {
 func Get1kAlmostSorted() []int {
 	s := Get1kSorted()
 
-	rand.Shuffle(n1k*.05, func(i, j int) {
-		s[i], s[j] = s[j], s[i]
-	})
+	irand.Shuffle(s, .2)
 
 	return s
 }

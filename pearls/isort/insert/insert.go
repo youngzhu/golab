@@ -1,5 +1,10 @@
 package insert
 
+// Sort 插入排序，方法2更优
+func Sort(s []int) {
+	Sort2(s)
+}
+
 func Sort1(s []int) {
 	n := len(s)
 	for i := 1; i < n; i++ {

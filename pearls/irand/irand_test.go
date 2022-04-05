@@ -28,3 +28,9 @@ func TestUniqueInts(t *testing.T) {
 		println(s[i])
 	}
 }
+
+func TestShuffle(t *testing.T) {
+	var a = []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+	Shuffle(a, .2)
+	t.Log(a)
+}
