@@ -1,6 +1,9 @@
 package irand
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 func TestIntsn(t *testing.T) {
 	s := Intsn(100, 10)
@@ -27,6 +30,11 @@ func TestUniqueInts(t *testing.T) {
 	for i := range s {
 		println(s[i])
 	}
+}
+
+func TestOrderedUniqueInts(t *testing.T) {
+	s := OrderedUniqueInts(10, 8)
+	fmt.Println(s)
 }
 
 func TestShuffle(t *testing.T) {
