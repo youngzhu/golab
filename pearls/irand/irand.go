@@ -57,6 +57,11 @@ func OrderedUniqueInts(n, k int) []int {
 
 	for j := n - k; j < n; j++ {
 		t := rand.Int() % (j + 1)
+		// 如果t未插入成功，则插入j
+		// 一开始还纠结于：怎么保证t!=j (t in [0,j])
+		// 插入之前，set中的值一定在[0,j-1]之间
+		// 如果t未插入成功（set中已存在），则说明t一定是[0,j-1]之一，t<j，即t!=j
+		// 所以，在t不成功的情况下，可以直接插入j
 		if ok := set.Insert(t); !ok {
 			set.Insert(j)
 		}
