@@ -26,6 +26,7 @@ var loggerStderr = log.New(os.Stderr, "Job: ", log.Ldate)
 
 func main() {
 	job := NewJob("listen", loggerStderr)
+	// 直接调用Logger的方法
 	job.Println("starting now...")
 
 	job.Printf("%s %d", "counter", 2022)
