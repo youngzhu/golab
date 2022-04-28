@@ -20,6 +20,7 @@ var numCPU = runtime.NumCPU()
 
 func (v Vector) DoAll(u Vector) {
 	c := make(chan int, numCPU) // buffering optional but sensible
+	// 这是个神奇的分配法
 	for i := 0; i < numCPU; i++ {
 		go v.DoSome(i*len(v)/numCPU, (i+1)*len(v)/numCPU, u, c)
 	}
