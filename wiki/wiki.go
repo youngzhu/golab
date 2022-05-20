@@ -86,6 +86,7 @@ var validPath = regexp.MustCompile("^/(edit|save|view)/([a-zA-Z0-9]+)$")
 
 func makeHandler(fn func(w http.ResponseWriter, r *http.Request, string2 string)) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		//fmt.Println("URL Path:", r.URL.Path)
 		m := validPath.FindStringSubmatch(r.URL.Path)
 		if m == nil {
 			http.NotFound(w, r)
@@ -95,7 +96,12 @@ func makeHandler(fn func(w http.ResponseWriter, r *http.Request, string2 string)
 	}
 }
 
+func homepageHandler(w http.ResponseWriter, r *http.Request) {
+	http.Redirect(w, r, "/view/HomePage", http.StatusFound)
+}
+
 func main() {
+	http.HandleFunc("/", homepageHandler)
 	http.HandleFunc("/view/", makeHandler(viewHandler))
 	http.HandleFunc("/edit/", makeHandler(editHandler))
 	http.HandleFunc("/save/", makeHandler(saveHandler))
