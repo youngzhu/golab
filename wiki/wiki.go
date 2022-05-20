@@ -16,17 +16,18 @@ type Page struct {
 }
 
 const (
-	pathRoot   = "wiki/"
-	pathOutput = "wiki/output/"
+	pathRoot = "wiki/"
+	pathData = "wiki/data/"
+	pathTmpl = "wiki/tmpl/"
 )
 
 func (p Page) save() error {
-	filename := pathOutput + p.Title + ".txt"
+	filename := pathData + p.Title + ".txt"
 	return os.WriteFile(filename, p.Body, 0600)
 }
 
 func loadPage(title string) (*Page, error) {
-	filename := pathOutput + title + ".txt"
+	filename := pathData + title + ".txt"
 	body, err := os.ReadFile(filename)
 	//fmt.Println(os.Getwd())
 	if err != nil {
@@ -54,8 +55,8 @@ func editHandler(w http.ResponseWriter, r *http.Request, title string) {
 }
 
 var templateFiles = []string{
-	pathRoot + "edit.html",
-	pathRoot + "view.html",
+	pathTmpl + "edit.html",
+	pathTmpl + "view.html",
 }
 var templates = template.Must(template.ParseFiles(templateFiles...))
 
