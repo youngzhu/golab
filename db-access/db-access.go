@@ -60,6 +60,23 @@ func albumByID(id int) (Album, error) {
 	return alb, nil
 }
 
+// 如果插入成功，则返回新记录的ID
+// 否则返回0
+func addAlbum(alb Album) (int, error) {
+	insert := "insert into album (title, artist, price) values (?, ?, ?)"
+	result, err := db.Exec(insert, alb.Title, alb.Artist, alb.Price)
+	if err != nil {
+		return 0, fmt.Errorf("addAlbum: %v", err)
+	}
+
+	// 获得新记录的ID
+	id, err := result.LastInsertId()
+	if err != nil {
+		return 0, fmt.Errorf("addAlbum: %v", err)
+	}
+	return int(id), nil
+}
+
 func main() {
 	cfg := mysql.Config{
 		User:   "root",
@@ -90,9 +107,19 @@ func main() {
 	}
 	fmt.Printf("Albums found: %v\n", albums)
 
-	alb, err := albumByID(12)
+	alb, err := albumByID(2)
 	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Printf("Albums found: %v\n", alb)
+
+	albID, err := addAlbum(Album{
+		Title:  "Cafe or Tea",
+		Artist: "Andy Lau",
+		Price:  99.99,
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf("ID of added album: %v\n", albID)
 }
