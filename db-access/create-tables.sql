@@ -15,3 +15,12 @@ values
     ('Giant Steps', 'John Coltrane', 63.99),
     ('Jeru', 'Gerry Mulligan', 17.99),
     ('Sarah Vaughan', 'sarah Vaughan', 34.99);
+
+create table album_order (
+    id int auto_increment not null,
+    customer_id int not null,
+    album_id int not null,
+    quantity int not null ,
+    date date not null default (current_date ),
+    primary key (`id`)
+);

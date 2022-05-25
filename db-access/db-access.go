@@ -3,10 +3,13 @@ package main
 // https://golang.google.cn/doc/tutorial/database-access
 
 import (
+	"context"
 	"database/sql"
 	"fmt"
 	"github.com/youngzhu/golab/db-access/handle"
+	"github.com/youngzhu/golab/db-access/order"
 	"log"
+	"time"
 )
 
 var db *sql.DB
@@ -146,4 +149,15 @@ func main() {
 		log.Fatal(err)
 	}
 	fmt.Printf("Albums found: %v\n", alb)
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	//orderID, err := order.CreateOrder(db, ctx, 1, 1, 1)
+	//orderID, err := order.CreateOrder(db, ctx, 1, 101, 1) // not enough inventory
+	//orderID, err := order.CreateOrder(db, ctx, 0, 10, 1) // canPurchase 0: unknown album
+	orderID, err := order.CreateOrder(db, ctx, 2, 10, 2) // canPurchase 0: unknown album
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf("Order created: %v\n", orderID)
 }
