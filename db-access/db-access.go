@@ -5,7 +5,7 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	"github.com/go-sql-driver/mysql"
+	"github.com/youngzhu/golab/db-access/handle"
 	"log"
 )
 
@@ -78,21 +78,19 @@ func addAlbum(alb Album) (int, error) {
 }
 
 func main() {
-	cfg := mysql.Config{
-		User:   "root",
-		Passwd: "root",
-		Net:    "tcp",
-		Addr:   "localhost:3306",
-		DBName: "golab",
-	}
 	var err error
-	// Open 不一定立即连接数据库，取决于驱动的实现
-	// 所以，用 Ping 确认连接
-	db, err = sql.Open("mysql", cfg.FormatDSN())
+
+	//db, err = handle.OpenWithString()
+	db, err = handle.OpenWithProperties()
+	// 错误：unknown collation
+	// 不知道为啥。。
+	//db, err = handle.OpenWithConnector()
 	if err != nil {
 		log.Fatal(err)
 	}
 
+	// Open 不一定立即连接数据库，取决于驱动的实现
+	// 所以，用 Ping 确认连接
 	err = db.Ping()
 	if err != nil {
 		log.Fatal(err)
