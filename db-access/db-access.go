@@ -12,10 +12,11 @@ import (
 var db *sql.DB
 
 type Album struct {
-	ID     int
-	Title  string
-	Artist string
-	Price  float32
+	ID       int
+	Title    string
+	Artist   string
+	Price    float32
+	Quantity int
 }
 
 func albumsByArtist(name string) ([]Album, error) {
@@ -29,7 +30,7 @@ func albumsByArtist(name string) ([]Album, error) {
 
 	for rows.Next() {
 		var alb Album
-		if err := rows.Scan(&alb.ID, &alb.Title, &alb.Artist, &alb.Price); err != nil {
+		if err := rows.Scan(&alb.ID, &alb.Title, &alb.Artist, &alb.Price, &alb.Quantity); err != nil {
 			return nil, fmt.Errorf("albumsByArtist %q: %v", name, err)
 		}
 		albums = append(albums, alb)
@@ -50,7 +51,7 @@ func albumByID(id int) (Album, error) {
 
 	sqlStr := "select * from album where id=?"
 	row := db.QueryRow(sqlStr, id)
-	if err := row.Scan(&alb.ID, &alb.Title, &alb.Artist, &alb.Price); err != nil {
+	if err := row.Scan(&alb.ID, &alb.Title, &alb.Artist, &alb.Price, &alb.Quantity); err != nil {
 		if err == sql.ErrNoRows {
 			return alb, fmt.Errorf("albumByID %d: no such album", id)
 		}
@@ -68,7 +69,7 @@ func AlbumByID(id int) (Album, error) {
 
 	var alb Album
 
-	err = stmt.QueryRow(id).Scan(&alb.ID, &alb.Title, &alb.Artist, &alb.Price)
+	err = stmt.QueryRow(id).Scan(&alb.ID, &alb.Title, &alb.Artist, &alb.Price, &alb.Quantity)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			return alb, fmt.Errorf("albumByID %d: no such album", id)

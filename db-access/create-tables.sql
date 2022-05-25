@@ -4,6 +4,7 @@ create table album (
     title varchar(128) not null,
     artist varchar(255) not null,
     price decimal(5,2) not null,
+    quantity int default 100,
     primary key (`id`)
 );
 
