@@ -60,6 +60,25 @@ func albumByID(id int) (Album, error) {
 	return alb, nil
 }
 
+func AlbumByID(id int) (Album, error) {
+	stmt, err := db.Prepare("select * from album where id=?")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var alb Album
+
+	err = stmt.QueryRow(id).Scan(&alb.ID, &alb.Title, &alb.Artist, &alb.Price)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return alb, fmt.Errorf("albumByID %d: no such album", id)
+		}
+		return alb, fmt.Errorf("albumByID %d: %v", id, err)
+	}
+
+	return alb, nil
+}
+
 // 如果插入成功，则返回新记录的ID
 // 否则返回0
 func addAlbum(alb Album) (int, error) {
@@ -120,4 +139,10 @@ func main() {
 		log.Fatal(err)
 	}
 	fmt.Printf("ID of added album: %v\n", albID)
+
+	alb, err = AlbumByID(1)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf("Albums found: %v\n", alb)
 }
