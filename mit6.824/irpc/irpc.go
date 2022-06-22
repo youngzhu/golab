@@ -5,7 +5,9 @@ import (
 	"log"
 	"net"
 	"net/rpc"
+	"strconv"
 	"sync"
+	"time"
 )
 
 // Common RPC request/reply definitions
@@ -126,6 +128,29 @@ func main() {
 	server()
 
 	put("subject", "6.824")
+	put("subject", "mit6.824")
 	fmt.Printf("Put done.\n")
-	fmt.Printf("get() -> %s\n", get("subject1"))
+	fmt.Printf("get() -> %s\n", get("subject"))
+
+	//go func() {
+	//	for i := 0; i < 100; i++ {
+	//		put("count", strconv.Itoa(i))
+	//		time.Sleep(100 * time.Millisecond)
+	//	}
+	//}()
+
+	for i := 0; i < 100; i++ {
+		go func() {
+			put("count", strconv.Itoa(i))
+			time.Sleep(100 * time.Millisecond)
+		}()
+		//time.Sleep(1000 * time.Millisecond)
+	}
+
+	for i := 0; i < 100; i++ {
+		fmt.Printf("get() -> %s\n", get("count"))
+		time.Sleep(300 * time.Millisecond)
+	}
+
+	fmt.Println("all done")
 }
