@@ -44,7 +44,9 @@ func get(key string) *Message {
 		log.Fatal("error:", err)
 	}
 	client.Close()
-	return reply.Message
+	msg := reply.Message
+	msg.Text = "hi"
+	return msg
 }
 
 // Server
@@ -54,12 +56,7 @@ type KV struct {
 	messages map[string]*Message
 }
 
-func server() {
-	kv := new(KV)
-	kv.messages = map[string]*Message{}
-
-	done := make(chan bool)
-	kv.messages["Jan"] = &Message{Text: "hello", Done: done}
+func server(kv *KV) {
 
 	rpcs := rpc.NewServer()
 	rpcs.Register(kv)
@@ -94,9 +91,17 @@ func (kv *KV) Get(args *GetArgs, reply *GetReply) error {
 }
 
 func main() {
-	server()
+	kv := new(KV)
+	kv.messages = map[string]*Message{}
+
+	done := make(chan bool)
+	msg := &Message{Text: "hello", Done: done}
+	kv.messages["Jan"] = msg
+
+	server(kv)
 
 	fmt.Printf("get() -> %v\n", get("Jan"))
 
-	fmt.Println("all done")
+	//msg.Text = "hi"
+	fmt.Printf("get() -> %v\n", get("Jan"))
 }
