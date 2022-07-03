@@ -1,4 +1,4 @@
-package create_temp
+package ios
 
 import (
 	"log"
