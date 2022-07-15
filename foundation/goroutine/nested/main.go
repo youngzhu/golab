@@ -33,7 +33,8 @@ func main() {
 	go count(i)
 
 	for {
-		println(i.Get())
+		i.Increment()
+		println("main:", i.Get())
 		time.Sleep(time.Second)
 	}
 
@@ -50,7 +51,7 @@ func count(i *Counter) {
 	go func() {
 		for {
 			i.Increment()
-			println("son", i.Get())
+			println("son:", i.Get())
 			time.Sleep(time.Second)
 		}
 	}()
