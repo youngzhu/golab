@@ -5,9 +5,7 @@ import (
 	"log"
 	"net"
 	"net/rpc"
-	"strconv"
 	"sync"
-	"time"
 )
 
 // Common RPC request/reply definitions
@@ -56,7 +54,11 @@ func get(key string) string {
 		log.Fatal("error:", err)
 	}
 	client.Close()
-	return reply.Value
+	if OK != reply.Err {
+		return string(reply.Err)
+	} else {
+		return reply.Value
+	}
 }
 
 func put(key string, value string) {
@@ -139,18 +141,20 @@ func main() {
 	//	}
 	//}()
 
-	for i := 0; i < 100; i++ {
-		go func() {
-			put("count", strconv.Itoa(i))
-			time.Sleep(100 * time.Millisecond)
-		}()
-		//time.Sleep(1000 * time.Millisecond)
-	}
+	//for i := 0; i < 100; i++ {
+	//	go func() {
+	//		put("count", strconv.Itoa(i))
+	//		time.Sleep(100 * time.Millisecond)
+	//	}()
+	//	//time.Sleep(1000 * time.Millisecond)
+	//}
+	//
+	//for i := 0; i < 100; i++ {
+	//	fmt.Printf("get() -> %s\n", get("count"))
+	//	time.Sleep(300 * time.Millisecond)
+	//}
 
-	for i := 0; i < 100; i++ {
-		fmt.Printf("get() -> %s\n", get("count"))
-		time.Sleep(300 * time.Millisecond)
-	}
+	fmt.Printf("get(\"unknown\") -> %s\n", get("unknown"))
 
 	fmt.Println("all done")
 }
