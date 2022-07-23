@@ -12,7 +12,7 @@ import (
 
 type Message struct {
 	Text string
-	Done chan bool
+	Done chan bool // 锁对象 无效
 }
 
 type (
