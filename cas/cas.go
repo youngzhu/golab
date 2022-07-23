@@ -43,12 +43,11 @@ func (c *Counter) Get() int {
 }
 
 func (c *Counter) Increment() int {
-	var v int
 	for {
-		v = c.value.Get()
-		if c.value.CompareAndSet(v, v+1) {
-			break
+		current := c.Get()
+		next := current + 1
+		if c.value.CompareAndSet(current, next) {
+			return next
 		}
 	}
-	return v + 1
 }
