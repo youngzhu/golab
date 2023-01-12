@@ -1,9 +1,11 @@
 package json_test
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"reflect"
+	"time"
 )
 
 // JSON只能处理公共的字段（首字母大写）
@@ -21,6 +23,28 @@ func ExampleEncoding() {
 	//fmt.Println(string(b))
 	//fmt.Println(string(bb))
 	fmt.Println(reflect.DeepEqual(b, bb))
+
+	// Output:
+	// true
+}
+
+func ExampleEncoding_time() {
+	var out bytes.Buffer
+
+	type foo struct {
+		CreatedAt time.Time
+	}
+
+	t1 := foo{time.Now()}
+
+	json.NewEncoder(&out).Encode(t1)
+	//fmt.Println(out.String())
+
+	var t2 foo
+	json.NewDecoder(&out).Decode(&t2)
+	//fmt.Println(t2)
+
+	fmt.Println(t1.CreatedAt.Equal(t2.CreatedAt))
 
 	// Output:
 	// true
